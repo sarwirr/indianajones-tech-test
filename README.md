@@ -1,17 +1,12 @@
 # indianajones-tech-test
 
 ## Algorithme utilisé
-Ce code implémente l'algorithme de Dijkstra pour trouver le chemin le plus court entre deux villes dans un réseau de trajets ferroviaires.
-J'ai pris comme nodes les villes de depart et de destination et leurs poids la duree du trajet.
+L'algorithme de **Bellman-Ford** est un algorithme utilisé pour trouver le plus court chemin entre un nœud source et tous les autres nœuds dans un graphe pondéré, même si le graphe contient des arêtes de poids négatif. L'idée principale derrière l'algorithme est de chercher à améliorer progressivement les estimations de distance entre le nœud source et les autres nœuds en considérant toutes les arêtes dans le graphe.
 
-![image](https://miro.medium.com/v2/resize:fit:566/0*LMTm4lzv_xuTGq8J.png)
+Dans l'implémentation, j'ai créer un graphe à partir de la liste de trajets, où les nœuds sont les villes et les arêtes représentent les trajets entre les villes. Les poids des arêtes seront la durée des trajets.
+je commence par initialiser un dictionnaire des distances avec des valeurs infinies pour tous les nœuds, sauf pour le nœud source pour lequel la distance est mise à zéro. Ensuite, je parcours toutes les arêtes dans le graphe pour mettre à jour les distances en vérifiant si le chemin actuel offre une distance plus courte que celle précédemment enregistrée.
 
-**createGraph(trajets: Trajet[]):** 
-Cette fonction prend une liste de trajets en entrée et crée un graphe représentant les connexions entre les villes. Le graphe est représenté sous forme d'un dictionnaire où les clés sont les villes de départ et les valeurs sont à leur tour des dictionnaires où les clés sont les villes de destination et les valeurs sont les temps d'arrivée.
-
-**findShortestPath(trajets: Trajet[], villeDepart: string, villeDestination: string, heureDepart: string):** 
-Cette fonction prend en entrée les trajets, la ville de départ, la ville de destination et l'heure de départ. Elle implémente l'algorithme de Dijkstra pour trouver le chemin le plus court entre la ville de départ et la ville de destination. L'algorithme utilise une file de priorité (PriorityQueue) pour sélectionner le nœud suivant à explorer en fonction du temps estimé pour atteindre ce nœud. Elle explore ensuite les voisins de chaque nœud, met à jour les coûts et les nœuds précédents si un chemin plus court est trouvé.
-
+Je répète cette étape pour un nombre suffisant d'itérations pour garantir que les distances ont convergé vers les plus courts chemins. Enfin, je reconstruis le chemin le plus court à partir des distances et des prédécesseurs enregistrés pour chaque nœud. Cette approche garantit que même dans les graphes avec des poids négatifs, l'algorithme trouvera le plus court chemin, ou détectera la présence de cycles de poids négatif.
 ## Frameworks
 
 ### Frontend
