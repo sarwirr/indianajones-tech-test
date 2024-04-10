@@ -1,0 +1,11 @@
+<div>
+    <div class="text-center">
+     
+      <button class="btn btn-primary" type="button" (click)="searchTrajet()">&lt; Chercher le trajet</button>
+    </div>
+  
+    <div class="mt-3">
+      <app-trajet-result-table [trajets]="trajets" *ngIf="trajets.length > 0"></app-trajet-result-table>
+    </div>
+  </div>
+  

@@ -1,0 +1,45 @@
+<form class="row">
+    <div class="row">
+      <!-- Ville de depart -->
+      <div class="col-md-3">
+        <mat-form-field class="example-container">
+          <mat-label>Ville de depart</mat-label>
+          <input matInput
+                 placeholder="Ville de depart"
+                 name="villeDepart"
+                 type="text"
+                 [(ngModel)]="trajetInput.depart"
+                 (input)="emitFormData()"
+                 required>
+        </mat-form-field>
+      </div>
+      <!-- Ville de d'arrivee -->
+      <div class="col-md-3">
+        <mat-form-field class="example-container">
+          <mat-label>Ville de d'arrivee</mat-label>
+          <input matInput
+                 placeholder="Ville de d'arrivee"
+                 name="villeDestination"
+                 type="text"
+                 [(ngModel)]="trajetInput.destination"
+                 (input)="emitFormData()"
+                 required>
+        </mat-form-field>
+      </div>
+      <!-- Heure de depart -->
+      <div class="col-md-3">
+        <mat-form-field class="example-container">
+          <mat-label>Heure de depart</mat-label>
+          <input matInput
+                 name="heureDepart"
+                 [format]="24"
+                 [(ngModel)]="trajetInput.heureDepart"
+                 [ngxMatTimepicker]="pickerB"
+                 placeholder="Heure de depart*"
+                 required>
+        </mat-form-field>
+        <ngx-mat-timepicker color="accent" #pickerB (timeSet)="emitFormData()"></ngx-mat-timepicker>
+      </div>
+    </div>
+  </form>
+  

@@ -1,0 +1,27 @@
+<div class="container mt-2">
+  <div>
+    <h4>Inputs</h4>
+    <div class="container mt-4">
+      <app-trajet-search (trajetEvent)="onChangeInput($event)"></app-trajet-search>
+    </div>
+  </div>
+  </div>
+
+  <hr>
+
+  <div class="mt-4">
+    <h4>Liste d'horaires des trains</h4>
+    <div class="container mt-4">
+      <app-trajet></app-trajet>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="mt-4">
+    <h4>Résultat de la recherche</h4>
+    <div class="container mt-4">
+      <app-trajet-result [trajetInput]="indianaTrajet"></app-trajet-result>
+    </div>
+  </div>
+

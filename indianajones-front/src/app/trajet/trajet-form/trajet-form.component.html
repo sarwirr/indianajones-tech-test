@@ -1,0 +1,67 @@
+<form #trajetForm="ngForm" (ngSubmit)="onSubmit(trajetForm)">
+    <div class="row">
+        <!-- Ville de depart -->
+        <div class="col-md-3">
+            <mat-form-field class="example-container">
+                <mat-label>Ville de depart</mat-label>
+                <input matInput
+                       placeholder="Ville de depart"
+                       name="villeDepart"
+                       type="text"
+                       [(ngModel)]="trajet.depart"
+                       #villeDepart="ngModel"
+                       required>
+                <mat-error *ngIf="villeDepart.invalid && (villeDepart.dirty || villeDepart.touched)">Ville de départ est requise.</mat-error>
+            </mat-form-field>
+        </div>
+        <!-- Ville de d'arrivee -->
+        <div class="col-md-3">
+            <mat-form-field class="example-container">
+                <mat-label>Ville de d'arrivee</mat-label>
+                <input matInput
+                       placeholder="Ville de d'arrivee"
+                       name="villeDestination"
+                       type="text"
+                       [(ngModel)]="trajet.destination"
+                       #villeDestination="ngModel"
+                       required>
+                <mat-error *ngIf="villeDestination.invalid && (villeDestination.dirty || villeDestination.touched)">Ville d'arrivée est requise.</mat-error>
+            </mat-form-field>
+        </div>
+        <!-- Heure de depart -->
+        <div class="col-md-3">
+            <mat-form-field class="example-container">
+                <mat-label>Heure de depart  </mat-label>
+                <input matInput
+                       name="heureDepart"
+                       [format]="24"
+                       [(ngModel)]="trajet.heureDepart"
+                       [ngxMatTimepicker]="pickerB"
+                       placeholder="Heure de depart*"
+                       #heureDepart="ngModel"
+                       required>
+            </mat-form-field>
+            <mat-error *ngIf="heureDepart.invalid && (heureDepart.dirty || heureDepart.touched)">Heure de depart est requis.</mat-error>
+<ngx-mat-timepicker color="accent"
+                         #pickerB></ngx-mat-timepicker>
+        </div>
+        <!-- Durée de trajet -->
+        <div class="col-md-3">
+            <mat-form-field class="example-container">
+                <mat-label>Durée de trajet</mat-label>
+                <input matInput
+                       [format]="24"
+                       name="dureeHour"
+                       [(ngModel)]="trajet.duree"
+                       [ngxMatTimepicker]="pickerE"
+                       placeholder="Durée de trajet"
+                          #dureeHour="ngModel"
+                       required>   
+            </mat-form-field>     
+            <mat-error *ngIf="dureeHour.invalid && (dureeHour.dirty || dureeHour.touched)">Durée de trajet est requise.</mat-error>     
+<ngx-mat-timepicker color="accent"
+					 #pickerE></ngx-mat-timepicker>
+        </div>
+    </div>
+    <button mat-raised-button color="primary" [disabled]="trajetForm.invalid" type="submit">Ajouter</button>
+</form>
