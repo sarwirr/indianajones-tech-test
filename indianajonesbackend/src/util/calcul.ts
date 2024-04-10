@@ -1,16 +1,16 @@
-export function parseTime(timeStr: string): number {
+export function convertToMinutes(timeStr: string): number {
     const [hours, minutes] = timeStr.split(':').map(Number);
     return hours * 60 + minutes;
   }
 
   
   export function calculateArrivalTime(heureDepart: string,duree: string,heureDarrivee?: string,): number {
-    const departureTimeInMinutes = parseTime(heureDepart);
-    const travelTimeInMinutes = parseTime(duree);
+    const departureTimeInMinutes = convertToMinutes(heureDepart);
+    const travelTimeInMinutes = convertToMinutes(duree);
   
     let arrivalTime;
     if (heureDarrivee) {
-      arrivalTime = parseTime(heureDarrivee);
+      arrivalTime = convertToMinutes(heureDarrivee);
       arrivalTime = +travelTimeInMinutes;
     } else {
       arrivalTime = departureTimeInMinutes + travelTimeInMinutes;

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Trajet } from 'src/trajet/entities/trajet.entity';
-import { calculateArrivalTime, parseTime } from 'src/util/calcul';
+import { calculateArrivalTime, convertToMinutes } from 'src/util/calcul';
 
 
 @Injectable()
@@ -40,8 +40,8 @@ export class DijikstraService {
       nodesCostFromStart[node] = Infinity;
       prevNodes[node] = null;
     }
-    nodesCostFromStart[villeDepart] = parseTime(heureDepart);
-    pq.enqueue(parseTime(heureDepart), villeDepart);
+    nodesCostFromStart[villeDepart] = convertToMinutes(heureDepart);
+    pq.enqueue(convertToMinutes(heureDepart), villeDepart);
 
   
     while (!pq.isEmpty()) {
@@ -68,22 +68,28 @@ export class DijikstraService {
 
       //Mise a jour du poids des noeuds voisins remplacer les poids infinis par les poids actuels
       for (const neighbor in graph[currentNode]) {
+        //newCost represents the duration to travel from the current node to the neighboring node
         const newCost = graph[currentNode][neighbor];
-        
+      
+      //checks if there exists at least one trajet from the current node to the neighboring node
         const departureTimeCompatible = trajets.some(
           (trajet) =>
             trajet.depart === currentNode &&
             trajet.destination === neighbor &&
-            parseTime(trajet.heureDepart) >= currentTime,
+            convertToMinutes(trajet.heureDepart) >= currentTime,
         );
         
         if (departureTimeCompatible) {
+        //checks if there's no recorded cost yet to reach the neighboring node
+
           if (!nodesCostFromStart[neighbor] && neighbor === villeDestination) {
             prevNodes[villeDestination] = currentNode;
             nodesCostFromStart[villeDestination] = newCost;
             pq.enqueue(newCost, villeDestination);
           }
           if (newCost < nodesCostFromStart[neighbor]) {
+            //updating the cost to reach the neighboring node
+            
             nodesCostFromStart[neighbor] = newCost;
             prevNodes[neighbor] = currentNode;
             pq.enqueue(newCost, neighbor);
@@ -112,12 +118,12 @@ class PriorityQueue {
   constructor() {
     this.elements = [];
   }
-
+  // Sort nodes by distance and pick the closest unvisited node
   enqueue(priority: number, element: string) {
     this.elements.push([priority, element]);
     this.elements.sort((a, b) => a[0] - b[0]);
   }
-
+ 
   dequeue() {
     return this.elements.shift();
   }
