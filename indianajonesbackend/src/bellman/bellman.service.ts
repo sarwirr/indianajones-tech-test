@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Trajet } from 'src/trajet/entities/trajet.entity';
-import { calculateArrivalTime, convertToMinutes } from 'src/util/calcul';
+import {convertToMinutes } from 'src/util/calcul';
 
 @Injectable()
 export class BellmanFordService {
