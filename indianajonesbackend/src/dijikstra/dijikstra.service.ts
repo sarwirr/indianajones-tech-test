@@ -8,11 +8,9 @@ import { calculateArrivalTime, parseTime } from 'src/util/calcul';
 @Injectable()
 export class DijikstraService {
   constructor() {}
-
   // Transformer la liste des trajets en un graphe representant des connexions entre les villes
 
-  createGraph(trajets: Trajet[]) {
-    
+  graphNode(trajets: Trajet[]) { 
     const graph: { [depart: string]: { [destination: string]: number } } = {};
     for (const trajet of trajets) {
       graph[trajet.depart] = graph[trajet.depart] || {};
@@ -26,7 +24,7 @@ export class DijikstraService {
 
   // Trouver le plus court chemin entre deux villes en utilisant l'algorithme de Dijkstra
 
-  findShortestPath(trajets: Trajet[],villeDepart: string,villeDestination: string,heureDepart: string,
+  shortestPath(trajets: Trajet[],villeDepart: string,villeDestination: string,heureDepart: string,
   ) {
 
     //PriorityQueue maintient les nœuds dans un ordre de priorité, 
@@ -36,7 +34,7 @@ export class DijikstraService {
     const pq = new PriorityQueue();
     const path: string[] = [];
     const prevNodes = {};
-    const graph = this.createGraph(trajets);
+    const graph = this.graphNode(trajets);
     const TrajetTrouve: Trajet[] = [];
 
     // Met un coût infini à toutes les villes
@@ -70,7 +68,7 @@ export class DijikstraService {
         break;
       }
 
-      //Mise a jour du poids des noeuds voisins
+      //Mise a jour du poids des noeuds voisins remplacer les poids infinis par les poids actuels
       for (const neighbor in graph[currentNode]) {
         const newCost = graph[currentNode][neighbor];
         

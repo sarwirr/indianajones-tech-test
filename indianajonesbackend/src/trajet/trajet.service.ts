@@ -60,16 +60,8 @@ export class TrajetService {
    async findtrajet(depart: string,destination: string,departTime: string
   ) {
     try {
-      const trajets = await this.findTrainsAfterOnTime(departTime);
-    
-      
-      const dijikstraResult = this.dijikstraService.findShortestPath(
-        trajets,
-        depart,
-        destination,
-        departTime,
-      );
-  
+      const trajets = await this.findTrainsAfterOnTime(departTime); 
+      const dijikstraResult = this.dijikstraService.shortestPath(trajets,depart,destination,departTime);
       return dijikstraResult;
     } catch (error) {
       return error.message;
