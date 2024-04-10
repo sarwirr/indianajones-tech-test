@@ -37,7 +37,7 @@ export class TrajetResultComponent {
     this.trajetService.searchBestTrajet(this.trajetInput.depart, this.trajetInput.destination, this.trajetInput.heureDepart).subscribe(
       (response: any) => {
         console.log(response);
-        this.trajets = response.TrajetTrouve;
+        this.trajets = response;
         this.isEmpty = this.trajets.length === 0; 
       },
       (error) => {
