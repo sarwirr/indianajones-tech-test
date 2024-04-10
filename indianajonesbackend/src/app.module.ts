@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TrajetModule } from './trajet/trajet.module';
-import { DijikstraService } from './dijikstra/dijikstra.service';
+import { BellmanFordService } from './bellman/bellman.service';
 import * as dotenv from 'dotenv';
 
 dotenv.config()
@@ -15,6 +15,6 @@ dotenv.config()
   TrajetModule,
   ],
   controllers: [AppController],
-  providers: [AppService, DijikstraService],
+  providers: [AppService, BellmanFordService],
 })
 export class AppModule {}

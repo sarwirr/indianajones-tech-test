@@ -3,12 +3,12 @@ import { CreateTrajetDto } from './dto/create-trajet.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Trajet, TrajetDocument } from './entities/trajet.entity';
 import { Model } from 'mongoose';
-import { DijikstraService } from 'src/dijikstra/dijikstra.service';
+import { BellmanFordService } from 'src/bellman/bellman.service';
 
 @Injectable()
 export class TrajetService {
   constructor(@InjectModel(Trajet.name) private trajetModel: Model<TrajetDocument>,
-                private dijikstraService : DijikstraService) {}
+                private bellmanFordService : BellmanFordService) {}
 
   async create(createTrajetDto: CreateTrajetDto) {
     try{
@@ -61,8 +61,8 @@ export class TrajetService {
   ) {
     try {
       const trajets = await this.findTrainsAfterOnTime(departTime); 
-      const dijikstraResult = this.dijikstraService.shortestPath(trajets,depart,destination,departTime);
-      return dijikstraResult;
+      const result = this.bellmanFordService.findShortestPath(trajets,depart,destination,departTime);
+      return result;
     } catch (error) {
       return error.message;
     }
