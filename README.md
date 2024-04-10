@@ -28,6 +28,6 @@ De plus,l'intégration de Angular Material avec le framework Angular est facile 
 ### Backend 
 
 j'ai travaillé sur le développement du backend en utilisant le framework **NestJS**. J'ai choisi NestJS pour sa structure modulaire et sa capacité à créer des applications robustes et évolutives grâce à l'utilisation de **TypeScript**. Pour la gestion des données, j'ai opté pour **MongoDB** en tant que base de données, en l'intégrant dans un conteneur Docker pour faciliter le déploiement et la gestion de la base de données. 
-Cette approche m'a permis de bénéficier de la flexibilité et de la scalabilité de **MongoDB** tout en tirant parti des avantages de l'isolation des conteneurs pour simplifier le déploiement et la gestion des infrastructures. En travaillant sur le backend, j'ai veillé à concevoir une architecture propre et bien organisée, en utilisant les fonctionnalités de NestJS telles que les modules, les contrôleurs et les services pour assurer une maintenance facile et une extensibilité future du système.
+Cette approche m'a permis de bénéficier de la flexibilité et de la scalabilité de **MongoDB** tout en tirant parti des avantages de l'isolation des conteneurs pour simplifier le déploiement et la gestion des infrastructures. 
 
 
