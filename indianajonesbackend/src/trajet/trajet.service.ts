@@ -61,6 +61,7 @@ export class TrajetService {
   ) {
     try {
       const trajets = await this.findTrainsAfterOnTime(departTime); 
+      
       const result = this.bellmanFordService.findShortestPath(trajets,depart,destination,departTime);
       return result;
     } catch (error) {

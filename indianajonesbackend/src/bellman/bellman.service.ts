@@ -1,59 +1,59 @@
 import { Injectable } from '@nestjs/common';
 import { Trajet } from 'src/trajet/entities/trajet.entity';
-import {convertToMinutes } from 'src/util/calcul';
 
 @Injectable()
 export class BellmanFordService {
   constructor() {}
 
-  findShortestPath(
-    listeTrajets: Trajet[],
-    depart: string,
-    destination: string,
-    heureDepart: string,
-  ): { chemin: string[]; tempsTotal: number } {
-    // Créer un graphe représentant les connexions entre les villes à partir de la liste des trajets
-    const graph = {};
-    listeTrajets.forEach(trajet => {
-      if (!graph[trajet.depart]) {
-        graph[trajet.depart] = [];
-      }
-      graph[trajet.depart].push({
-        destination: trajet.destination,
-        heureDepart: convertToMinutes(trajet.heureDepart),
-        duree: convertToMinutes(trajet.duree),
-      });
-    });
+  async findShortestPath(trajets: Trajet[], depart: string, destination: string, heureDepart: string): Promise<Trajet[]> {
+    // Convert heureDepart to minutes
+    const heureDepartMinutes = this.convertToMinutes(heureDepart);
 
-    // Initialiser les distances
-    const distances = {};
-    const predecesseurs = {};
-    Object.keys(graph).forEach(ville => {
-      distances[ville] = ville === depart ? convertToMinutes(heureDepart) : Infinity;
-      predecesseurs[ville] = null;
-    });
+    // Initialize distances and predecessors
+    const distances: { [key: string]: number } = {};
+    const predecesseurs: { [key: string]: Trajet | null } = {};
 
-    // Appliquer l'algorithme de Bellman-Ford
-    Object.keys(graph).forEach(_ => {
-      Object.keys(graph).forEach(ville => {
-        graph[ville].forEach(({ destination, heureDepart, duree }) => {
-          if (distances[ville] + heureDepart < distances[destination]) {
-            distances[destination] = distances[ville] + heureDepart;
-            predecesseurs[destination] = ville;
-          }
-        });
-      });
-    });
-
-    // Reconstruire le chemin le plus court
-    const chemin = [destination];
-    let current = destination;
-    while (predecesseurs[current] !== null) {
-      const villePrecedente = predecesseurs[current];
-      chemin.unshift(villePrecedente);
-      current = villePrecedente;
+    // Set initial distances
+    for (const trajet of trajets) {
+      distances[trajet.depart] = trajet.depart === depart ? 0 : Infinity;
+      distances[trajet.destination] = Infinity;
     }
 
-    return { chemin, tempsTotal: distances[destination] };
+    // Relax edges repeatedly
+    for (let i = 0; i < trajets.length - 1; i++) {
+      for (const trajet of trajets) {
+        const departTime = this.convertToMinutes(trajet.heureDepart);
+        const dureeMinutes = this.convertToMinutes(trajet.duree);
+        const arrivalTime = departTime + dureeMinutes;
+
+        if (arrivalTime >= distances[trajet.destination] || departTime < distances[trajet.depart])
+          continue;
+
+        if (arrivalTime < distances[trajet.destination]) {
+          distances[trajet.destination] = arrivalTime;
+          predecesseurs[trajet.destination] = trajet;
+        }
+      }
+    }
+
+    // Reconstruct shortest path
+    const shortestPath: Trajet[] = [];
+    let currentCity = destination;
+    while (currentCity !== depart) {
+      const predecessorTrajet = predecesseurs[currentCity];
+      if (!predecessorTrajet) {
+        return []; // No path found
+      }
+      shortestPath.unshift(predecessorTrajet);
+      currentCity = predecessorTrajet.depart;
+    }
+
+    return shortestPath;
+}
+
+
+  private convertToMinutes(timeStr: string): number {
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    return hours * 60 + minutes;
   }
 }
