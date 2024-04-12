@@ -29,7 +29,7 @@ export class TrajetService {
     }
   }
 
-  async findTrainsAfterOnTime(startTime: string): Promise<Trajet[]> {
+  async findTrainsOnTime(startTime: string): Promise<Trajet[]> {
     try {
       const [startHour, startMinute] = startTime.split(':').map(Number);
       const startTimeInMinutes = startHour * 60 + startMinute;
@@ -60,7 +60,7 @@ export class TrajetService {
    async findtrajet(depart: string,destination: string,departTime: string
   ) {
     try {
-      const trajets = await this.findTrainsAfterOnTime(departTime); 
+      const trajets = await this.findTrainsOnTime(departTime); 
       
       const result = this.bellmanFordService.findShortestPath(trajets,depart,destination,departTime);
       return result;
