@@ -27,8 +27,7 @@ export class TrajetFormComponent {
   ) {}
 
   onSubmit(form: NgForm) {
-    this.updateErrorMessage(); // Update error message if any fields are missing
-
+    // this.updateErrorMessage();
     if (form.valid) {
       // Get the selected time values
       const departureTime = this.trajet.heureDepart;
@@ -43,37 +42,37 @@ export class TrajetFormComponent {
 
       
 
-      this.trajetService.addTrajets(newTrajet).subscribe(
-        (response) => {
+      this.trajetService.addTrajets(newTrajet).subscribe({
+        next: (response: Trajet) => {
           this.toastr.success('Train ajouté avec succès');
           form.resetForm();
           this.trajetAdded.emit(response);
         },
-        (error) => {
+        error: (error) => {
           this.toastr.error(error.message);
         }
-      );
+      });
     }
   }
 
   // Update error message for missing fields
-  private updateErrorMessage() {
-    this.errorMessage = '';
+  // private updateErrorMessage() {
+  //   this.errorMessage = '';
 
-    if (!this.trajet.depart) {
-      this.errorMessage += 'Ville de départ est requise. ';
-    }
+  //   if (!this.trajet.depart) {
+  //     this.errorMessage += 'Ville de départ est requise. ';
+  //   }
 
-    if (!this.trajet.destination) {
-      this.errorMessage += 'Ville d\'arrivée est requise. ';
-    }
+  //   if (!this.trajet.destination) {
+  //     this.errorMessage += 'Ville d\'arrivée est requise. ';
+  //   }
 
-    if (!this.trajet.heureDepart) {
-      this.errorMessage += 'Heure de départ est requise. ';
-    }
+  //   if (!this.trajet.heureDepart) {
+  //     this.errorMessage += 'Heure de départ est requise. ';
+  //   }
 
-    if (!this.trajet.duree) {
-      this.errorMessage += 'Durée de trajet est requise. ';
-    }
-  }
+  //   if (!this.trajet.duree) {
+  //     this.errorMessage += 'Durée de trajet est requise. ';
+  //   }
+  // }
 }
