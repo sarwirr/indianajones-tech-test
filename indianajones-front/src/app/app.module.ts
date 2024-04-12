@@ -46,7 +46,7 @@ import { TrajetResultTableComponent } from './trajet-result/trajet-result-table/
        
 
   ],
-  providers: [TrajetService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
